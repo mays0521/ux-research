@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="lib/crafty.js"></script>
+  <script src="src/load.js"></script>
+  <script src="src/game.js"></script>
+  <script src="src/components.js"></script>
+  <script src="src/main.js"></script>
+  <script src="src/effects.js"></script>
+  <script src="src/player.js"></script>
+  <script src="src/enemy.js"></script>
+  <script src="src/weapon.js"></script>
+  <script src="src/background.js"></script>
+  <script src="src/constant.js"></script>
+  <script src="src/css.js"></script>
+
+  <script>
+      window.addEventListener('load', Game.start);
+  </script>
+  <style type="text/css" media="screen">
+    body  
+    {
+		background:url(./assets/body-bg.jpg);
+        text-align: center;
+        color: #DDD;
+        font-family:"Times New Roman", Times, serif;
+     }
+	 h1{
+		 color:#fff;
+		 }
+     .controls{
+         color: #fff;
+     }      
+     .bottom{
+         color:#000;
+     }
+
+	#cr-stage{
+		margin : 5px auto 0;
+		border:silver 1px solid;
+		-webkit-box-shadow: 0 0 10px #555;
+		-moz-box-shadow: 0 0 10px #555;
+		box-shadow: 0 0 10px #555;
+		-moz-border-radius: 10px;
+		-webkit-border-radius: 10px;
+		border-radius: 10px;
+
+		
+		}
+  </style>
+</head>
+<body>
+  <table width="960" style="margin:0 auto;">
+  <tr>
+  <td align="center" width="250" style="padding:0;">
+  <img src="./assets/logo.png"/>
+  </td>
+  <td align="left" style="padding:0">
+  <div style="text-align:center; padding:0; width:540px;">
+  <h1>Welcome to our Air compact game</h1>
+  <p class="controls">Controls: arrow keys to move around.<br/>
+  Space to fire.</p>
+  </div>
+  </td>
+  </tr>
+  </table>
+
+  <div id="cr-stage"></div>
+
+  <p class="bottom">Electronic Game characteristics and User Experience: The anticipated versus unexpected event.  </p>
+
+</body>
+</html>
