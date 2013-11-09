@@ -2,7 +2,7 @@
 <html>
 <head>
   <script src="lib/crafty.js"></script>
-  <script src="src/load.js"></script>
+  <!-- <script src="src/load.js"></script> -->
   <script src="src/game.js"></script>
   <script src="src/components.js"></script>
   <script src="src/main.js"></script>
@@ -16,6 +16,44 @@
 
   <script>
       window.addEventListener('load', Game.start);
+
+      Crafty.load(["assets/enemy.png", "assets/ship0.png", "assets/bg.png" ], function () {
+          Crafty.sprite(32, 'assets/enemy.png', {
+              spr_enemy: [0, 0]
+          });
+
+          Crafty.sprite(Constant.player_width,Constant.player_height, 'assets/ship0.png', {
+              spr_air: [0, 0]
+          });
+
+          Crafty.sprite(960,1280, 'assets/bg.png', {
+              spr_bg: [0, 0]
+          });
+
+          Crafty.sprite(Constant.bullet_size,13,'assets/images/bullet1.png', {
+              bullet1:[0,0]
+          });
+
+          Crafty.sprite(128,"assets/explosion.png", {
+              explosion1:[0,0],
+              explosion2:[0,1],
+              explosion3:[0,2]
+          });
+          Crafty.audio.add('selfshoot1', [
+              'assets/sounds/laser1.mp3',
+              'assets/sounds/laser1.ogg'
+          ]);
+          Crafty.audio.add('explode1_sound', [
+              'assets/sounds/explode.mp3',
+              'assets/sounds/explode.ogg'
+          ]);
+          Crafty.audio.add('intro', [
+              'assets/sounds/through-space.mp3',
+              'assets/sounds/through-space.ogg'
+          ]);
+
+      });
+
   </script>
   <style type="text/css" media="screen">
     body  
