@@ -2,7 +2,7 @@
 
 // Declare app level module which depends on filters, and services
 angular.module('myApp',
-      ['myApp.config', 'myApp.filters', 'myApp.services', 'myApp.directives', 'myApp.controllers', 'firebase']
+      ['ngRoute', 'myApp.config', 'myApp.filters', 'myApp.services', 'myApp.directives', 'myApp.controllers', 'firebase']
    )
 
     // configure views; note the authRequired parameter for authenticated pages
@@ -34,13 +34,11 @@ angular.module('myApp',
     }])
 
    // double-check that the app has been configured
-    /*
    .run(['FBURL', function(FBURL) {
       if( FBURL === 'https://ux-survey.firebaseio.com' ) {
          angular.element(document.body).html('<h1>Please configure app/js/config.js before running!</h1>');
       }
    }])
-   */
 
    // establish authentication
    .run(['angularFireAuth', 'FBURL', '$rootScope', function(angularFireAuth, FBURL, $rootScope) {

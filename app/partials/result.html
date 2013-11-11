@@ -3,17 +3,21 @@
 
 <table class="table table-hover">
     <thead>
-        <tr>
-            <th>Name</th>
-            <th>Age</th>
-            <th>Dinner?</th>
-        </tr>
+    <tr>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Dinner?</th>
+        <th>Rating</th>
+        <th>Comment</th>
+    </tr>
     </thead>
     <tbody>
-        <tr ng-repeat="result in results">
-            <td>{{result.name}}</td>
-            <td>{{result.age}}</td>
-            <td>{{result.dinner}}</td>
-        </tr>
+    <tr ng-repeat="result in results">
+        <td>{{result.name}}</td>
+        <td>{{result.age}}</td>
+        <td>{{result.dinner}}</td>
+        <td>{{result.rating}}</td>
+        <td>{{result.comment}}</td>
+    </tr>
     </tbody>
 </table>

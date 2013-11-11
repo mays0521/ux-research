@@ -2,7 +2,7 @@
 
 /* Controllers */
 
-angular.module('myApp.controllers', [])
+angular.module('myApp.controllers', ['ngRoute'])
 
     .controller('gameCtrl', ['$scope', '$rootScope', function($scope, $rootScope) {
 
@@ -14,9 +14,21 @@ angular.module('myApp.controllers', [])
     }])
 
     .controller('surveyCtrl', ['$scope', '$rootScope', 'FBURL', 'Firebase', 'angularFireCollection', function($scope, $rootScope, FBURL, Firebase, angularFireCollection) {
-        $scope.newAge = '16-25';
-        $scope.newName = '';
-        $scope.newDinner = 'Yes';
+
+        // default placeholders
+        $scope.age = '16-25';
+        $scope.name = '';
+        $scope.dinner = 'Yes';
+        $scope.rating = 5;
+        $scope.comment = '';
+
+        // hide success information/alert
+        $scope.successInfo = false;
+
+        // star rating question - update rating score
+        $scope.updateRating = function(rating) {
+            $scope.rating = rating;
+        };
 
         // open modal
         $scope.takeSurvey = function () {
@@ -26,23 +38,24 @@ angular.module('myApp.controllers', [])
         // constrain number of messages by passing a ref to angularFire
         var age = new Firebase(FBURL+'/survey').limit(10),
             name = new Firebase(FBURL+'/survey').limit(30),
-            dinner = new Firebase(FBURL+'/survey').limit(5);
+            dinner = new Firebase(FBURL+'/survey').limit(5),
+            rating = new Firebase(FBURL+'/survey').limit(2),
+            comment = new Firebase(FBURL+'/survey').limit(500);
 
         // add the array into $scope
-        $rootScope.results = angularFireCollection(age, name, dinner);
+        $rootScope.results = angularFireCollection(age, name, dinner, rating, comment);
 
         // add new results to the list
         $scope.addSurvey = function() {
-            if( $scope.newAge && $scope.newName && $scope.newDinner ) {
-                $rootScope.results.add({age: $scope.newAge, name: $scope.newName, dinner: $scope.newDinner});
-                $scope.newAge = '16-25';
-                $scope.newName = '';
-                $scope.newDinner = 'Yes';
+            if( $scope.age && $scope.name && $scope.dinner && $scope.rating ) {
+                $rootScope.results.add({age: $scope.age, name: $scope.name, dinner: $scope.dinner, rating: $scope.rating, comment: $scope.comment});
                 $('#survey').modal('hide');
+                $scope.successInfo = true;
             } else {
                 alert('You missed something.');
             }
         };
+
     }])
 
     .controller('loginCtrl', ['$scope', 'loginService', '$location', function($scope, loginService, $location) {
