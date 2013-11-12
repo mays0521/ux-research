@@ -15,3 +15,16 @@ Crafty.c("RandomExplosion", {
     }
 });
 
+Crafty.c("BulletExplosion", {
+    init: function () {
+        this.addComponent("2D", "Canvas", "explosion1" , "SpriteAnimation")
+        .animate("explode1", 0, 0, 1)
+
+        .animate("explode1", 3, 2)
+        .bind("AnimationEnd", function () {
+            this.destroy();
+        });
+
+    }
+});
+

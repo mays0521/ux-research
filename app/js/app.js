@@ -8,8 +8,13 @@ angular.module('myApp',
     // configure views; note the authRequired parameter for authenticated pages
     .config(['$routeProvider', function($routeProvider) {
 
-        $routeProvider.when('/game', {
-            templateUrl: 'app/partials/game.html',
+        $routeProvider.when('/game1', {
+            templateUrl: 'app/partials/game1.html',
+            controller: 'gameCtrl'
+        });
+
+        $routeProvider.when('/game2', {
+            templateUrl: 'app/partials/game2.html',
             controller: 'gameCtrl'
         });
 
@@ -18,30 +23,34 @@ angular.module('myApp',
             controller: 'surveyCtrl'
         });
 
+        /*
         $routeProvider.when('/login', {
             templateUrl: 'app/partials/login.html',
             controller: 'loginCtrl'
         });
+        */
 
         $routeProvider.when('/result', {
-            authRequired: true,
+            // authRequired: true,
             templateUrl: 'app/partials/result.html',
             controller: 'resultCtrl'
         });
 
-        $routeProvider.otherwise({redirectTo: '/game'});
+        $routeProvider.otherwise({redirectTo: '/survey'});
 
     }])
 
    // double-check that the app has been configured
-   .run(['FBURL', function(FBURL) {
+   /*.run(['FBURL', function(FBURL) {
       if( FBURL === 'https://ux-survey.firebaseio.com' ) {
          angular.element(document.body).html('<h1>Please configure app/js/config.js before running!</h1>');
       }
-   }])
+   }])*/
 
    // establish authentication
+    /*
    .run(['angularFireAuth', 'FBURL', '$rootScope', function(angularFireAuth, FBURL, $rootScope) {
       angularFireAuth.initialize(FBURL, {scope: $rootScope, name: "auth", path: '/login'});
       $rootScope.FBURL = FBURL;
    }]);
+        */

@@ -9,16 +9,21 @@ Constant = {
     
 
     map_width: 60*16,
-    map_height: 35*16,
+    map_height: 35*16
 
 }
 
 Attribute = {
     //globle attributes
+    game_model: 1,
+    game_over: false,
 
     total_score: 0,
+    total_time: 0,
+
+	player_life: 100,
     player_position_x: 0,
-    player_position_y: 0,
+    player_position_y: 0
 }
 
 console.log(Attribute);

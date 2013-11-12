@@ -4,19 +4,21 @@
 <table class="table table-hover">
     <thead>
     <tr>
-        <th>Name</th>
-        <th>Age</th>
-        <th>Dinner?</th>
         <th>Rating</th>
+        <th>Difficulty</th>
+        <th>Play Again?</th>
+        <th>Recommend?</th>
+        <th>Game Type?</th>
         <th>Comment</th>
     </tr>
     </thead>
     <tbody>
     <tr ng-repeat="result in results">
-        <td>{{result.name}}</td>
-        <td>{{result.age}}</td>
-        <td>{{result.dinner}}</td>
         <td>{{result.rating}}</td>
+        <td>{{result.difficulty}}</td>
+        <td>{{result.playagain}}</td>
+        <td>{{result.recommend}}</td>
+        <td>{{result.gameType}}</td>
         <td>{{result.comment}}</td>
     </tr>
     </tbody>

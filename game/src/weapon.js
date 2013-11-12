@@ -14,7 +14,14 @@ Crafty.c('Bullet', {
   },
 
   move_up: function(){
-    this.y = this.y - 5;
+    this.y = this.y - 10;
+  },
+
+  hit_explore: function() {
+        Crafty.e("BulletExplosion").attr({
+                x: this.x - Constant.explosion_size/2 + this.w/2,
+                y: this.y - Constant.explosion_size/2 + this.h/2
+            });
   },
 });
 

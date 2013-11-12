@@ -26,10 +26,9 @@ Game = {
     start: function () {
         // Start crafty and set a background color so that we can see it's working
         Crafty.init(Game.width(), Game.height());
-        Crafty.background('rgb(249, 223, 125)');
 
-        Crafty.scene('Main');
-	Crafty.audio.play("intro",-1);
+        Crafty.scene('StartPage');
+	    Crafty.audio.play("intro",-1);
              
     }
 }

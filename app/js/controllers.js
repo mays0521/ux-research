@@ -4,22 +4,42 @@
 
 angular.module('myApp.controllers', ['ngRoute'])
 
-    .controller('gameCtrl', ['$scope', '$rootScope', function($scope, $rootScope) {
+    .controller('gameCtrl', ['$scope', '$rootScope', 'Firebase', 'angularFire', '$location', function($scope, $rootScope, Firebase, angularFire, $location) {
 
-        window.addEventListener('load', Game.start);
+        $scope.initGame = function () {
+            window.addEventListener('load', Game.start);
+        }
 
         $scope.$watch('score', function () {
             console.log($scope.score);
+            if ($scope.score > 0) {
+                $('#ranking').modal('show');
+            }
         });
+
+        var ref = new Firebase('https://ux-research.firebaseio.com/ranking');
+        angularFire(ref.limit(15), $rootScope, "ranking");
+        $scope.name = 'Guest' + Math.floor(Math.random()*101);
+        $scope.addScore = function() {
+            $rootScope.ranking[ref.push().name()] = {name: $scope.name, score: $scope.score, time: $scope.time};
+            $('#ranking').modal('hide');
+            $location.path('/survey');
+        };
+
+        $scope.initGame();
     }])
 
-    .controller('surveyCtrl', ['$scope', '$rootScope', 'FBURL', 'Firebase', 'angularFireCollection', function($scope, $rootScope, FBURL, Firebase, angularFireCollection) {
+    .controller('surveyCtrl', ['$scope', '$rootScope', 'FBURL', 'Firebase', 'angularFireCollection', 'angularFire', function($scope, $rootScope, FBURL, Firebase, angularFireCollection, angularFire) {
+
+        // default sorting
+        $scope.predicate = '-score';
 
         // default placeholders
-        $scope.age = '16-25';
-        $scope.name = '';
-        $scope.dinner = 'Yes';
         $scope.rating = 5;
+        $scope.difficulty = 'Medium';
+        $scope.playagain = 'Yes';
+        $scope.recommend = 'Yes';
+        $scope.gameType = 'Puzzle';
         $scope.comment = '';
 
         // hide success information/alert
@@ -35,21 +55,17 @@ angular.module('myApp.controllers', ['ngRoute'])
             $('#survey').modal('show');
         };
 
-        // constrain number of messages by passing a ref to angularFire
-        var age = new Firebase(FBURL+'/survey').limit(10),
-            name = new Firebase(FBURL+'/survey').limit(30),
-            dinner = new Firebase(FBURL+'/survey').limit(5),
-            rating = new Firebase(FBURL+'/survey').limit(2),
-            comment = new Firebase(FBURL+'/survey').limit(500);
+        // fetch score for ranking
+        var ref = new Firebase('https://ux-research.firebaseio.com/ranking');
+        angularFire(ref.limit(15), $rootScope, "ranking");
 
-        // add the array into $scope
-        $rootScope.results = angularFireCollection(age, name, dinner, rating, comment);
+        var surveyRef = new Firebase('https://ux-research.firebaseio.com/survey');
+        angularFire(surveyRef, $rootScope, "results");
 
         // add new results to the list
         $scope.addSurvey = function() {
-            if( $scope.age && $scope.name && $scope.dinner && $scope.rating ) {
-                $rootScope.results.add({age: $scope.age, name: $scope.name, dinner: $scope.dinner, rating: $scope.rating, comment: $scope.comment});
-                $('#survey').modal('hide');
+            if( $scope.rating && $scope.difficulty && $scope.playagain && $scope.recommend && $scope.gameType ) {
+                $rootScope.results[surveyRef.push().name()] = {rating: $scope.rating, difficulty: $scope.difficulty, playagain: $scope.playagain, recommend: $scope.recommend, gameType: $scope.gameType, comment: $scope.comment};
                 $scope.successInfo = true;
             } else {
                 alert('You missed something.');
@@ -77,10 +93,13 @@ angular.module('myApp.controllers', ['ngRoute'])
 
     .controller('resultCtrl', ['$scope', '$rootScope', 'loginService', 'angularFire', 'FBURL', '$timeout', function($scope, $rootScope, loginService, angularFire, FBURL, $timeout) {
 
-      angularFire(FBURL+'/users/'+$scope.auth.id, $scope, 'user', {});
+        // angularFire(FBURL+'/users/'+$scope.auth.id, $scope, 'user', {});
 
-      $rootScope.logout = function() {
-         loginService.logout('/survey');
-      };
+        var surveyRef = new Firebase('https://ux-research.firebaseio.com/survey');
+        angularFire(surveyRef, $rootScope, "results");
+
+        $rootScope.logout = function() {
+            loginService.logout('/survey');
+        };
 
     }]);

@@ -24,3 +24,17 @@ ul.rating {
     cursor: pointer;
     font-size: 2em;
 }
+
+/* game */
+
+#cr-stage{
+    margin : 5px auto 0;
+    border:silver 1px solid;
+    -webkit-box-shadow: 0 0 10px #555;
+    -moz-box-shadow: 0 0 10px #555;
+    box-shadow: 0 0 10px #555;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background:url(../../game/assets/b_bg.png);
+}
