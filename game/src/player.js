@@ -39,6 +39,14 @@ Crafty.c('Player', {
                     this.WeaponLevel++;
                 }
 
+                if (this.health < 20) {
+                    if (this.health < 15) {
+                        this.health += 5;
+                    } else {
+                        this.health = 20;
+                    }
+                }
+
                 Attribute.total_score += 30;
 
             })

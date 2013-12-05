@@ -310,24 +310,24 @@ Crafty.c('BigBoss', {
 
 // This is the basic enemy
 Crafty.c('EnemyManager', {
-  init: function() {
-    this.attr({
+    init: function() {
+        this.attr({
             generateFlag: true,
             delay: -1,
             dangerTime: 0
         })
-        .bind("EnterFrame", function() {
-                var l =  parseInt(Attribute.total_score/100) *0.1;
+            .bind("EnterFrame", function() {
+                var l =  parseInt(Attribute.total_time/100) *0.1;
                 this.generateEnemy(l);
                 this.hugeWave(l);
                 if(Math.random()< 0.001 + l* 0.001){
                     this.delay = 300;
                     if(Attribute.game_model != 2){
-                        Crafty.e('Noticer').shake();		
-                    }   
-                    
+                        Crafty.e('Noticer').shake();
+                    }
+
                 }
-                
+
                 if(this.delay> -1){
                     this.delay--;
                 }
@@ -335,13 +335,13 @@ Crafty.c('EnemyManager', {
                 if(this.delay == 0){
                     this.dangerTime = 300;
                 }
-                
 
-        });
-  },
 
-  generateEnemy: function(l){
-       if(Math.random()< 0.01 + l* 0.01){
+            });
+    },
+
+    generateEnemy: function(l){
+        if(Math.random()< 0.01 + l* 0.01){
             Crafty.e('Enemy1').attr({
                 x: Math.random()* 960,
                 y: 0,
@@ -349,47 +349,47 @@ Crafty.c('EnemyManager', {
                 health: 10+l
 
             });
-       }
-  },
+        }
+    },
 
-  hugeWave: function(l){
-            
-            if(this.dangerTime > 0){
-                this.dangerTime--;
-                if(this.dangerTime%parseInt(30-l) == 0){
-                    Crafty.e('Enemy2').attr({
+    hugeWave: function(l){
+
+        if(this.dangerTime > 0){
+            this.dangerTime--;
+            if(this.dangerTime%parseInt(30-l) == 0){
+                Crafty.e('Enemy2').attr({
                     x: Math.random()* 960,
                     y: 0,
                     speed: 4 + l*2,
                     health: 6 + l
-                    });
-                }
-                if(this.dangerTime%parseInt(80-l) == 0){
-                    Crafty.e('Enemy3').attr({
+                });
+            }
+            if(this.dangerTime%parseInt(120-l) == 0){
+                Crafty.e('Enemy3').attr({
                     x: Math.random()* 960,
                     y:0,
                     speed: 0.5 + l,
                     health: 40 + l*10
+                });
+            }
+
+            if(Attribute.game_model != 3){
+                if(this.dangerTime%parseInt(320-l) == 0){
+                    Crafty.e('SmallBoss').attr({
+                        x: Math.random()* 960,
+                        y: 128,
+                        speed: 3,
+                        w: 128,
+                        h: 128,
+                        health: 70 + l * 10,
+                        fireRate: 30
                     });
                 }
 
-                if(Attribute.game_model != 3){
-                    if(this.dangerTime%parseInt(180-l) == 0){
-                        Crafty.e('SmallBoss').attr({
-                            x: Math.random()* 960,
-                            y: 128,
-                            speed: 3,
-                            w: 128,
-                            h: 128,
-                            health: 100,
-                            fireRate: 20
-                        }); 
-                    }
-                    
-                }
-            } 
-            
-}
+            }
+        }
+
+    }
 });
 
 
