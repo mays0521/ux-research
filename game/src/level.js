@@ -3,7 +3,7 @@
 Crafty.scene('StartPage', function () {
 
     Crafty.e('2D, DOM, Text')
-    .text('Air Compact Game')
+    .text('Air Combat')
     .attr({ x: 0, y: 150, w: Game.width() })
     .css($game_start_intro);
 
