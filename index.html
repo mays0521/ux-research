@@ -41,7 +41,7 @@
 
         <div class="collapse navbar-collapse navbar-ex1-collapse">
             <ul class="nav navbar-nav pull-right">
-                <li><a href>About</a></li>
+                <li><a href data-toggle="modal" data-target="#about">About</a></li>
                 <!-- <li ng-show="auth"><a href="#/result">Survey Result</a></li>-->
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -67,6 +67,24 @@
         <span class="copyright pull-right"><a href="https://github.com/cdeng/ux-research" title="Github repository" target="_blank">Github</a> Project - Code licensed under <a href="http://opensource.org/licenses/mit-license.html" title="MIT License" target="_blank">MIT License</a></span>
     </div>
 </footer>
+
+<!-- About Modal -->
+<div class="modal fade" id="about" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">About</h4>
+            </div>
+            <div class="modal-body">
+                <h2>Coming Soon...</h2>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 <script src="http://static.firebase.com/v0/firebase.js"></script>
 <script src="http://cdn.jsdelivr.net/jquery/2.0.3/jquery-2.0.3.min.js"></script>
