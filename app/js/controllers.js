@@ -4,8 +4,9 @@
 
 angular.module('myApp.controllers', ['ngRoute'])
 
-    .controller('mainCtrl', ['$scope', '$rootScope', 'Firebase', 'angularFire', function($scope, $rootScope, Firebase, angularFire) {
+    .controller('mainCtrl', ['$scope', '$rootScope', 'FBURL', 'Firebase', 'angularFireCollection', 'angularFire', function($scope, $rootScope, FBURL, Firebase, angularFireCollection, angularFire) {
 
+        // main section controller
         $scope.initGame = function () {
             Game.start();
         };
@@ -18,18 +19,15 @@ angular.module('myApp.controllers', ['ngRoute'])
 
         var ref = new Firebase('https://ux-research.firebaseio.com/ranking');
         angularFire(ref.limit(10), $rootScope, "ranking");
-        $rootScope.name = 'Guest' + Math.floor(Math.random()*101);
+        $scope.name = 'Guest' + Math.floor(Math.random()*101);
         $scope.addScore = function() {
-            $rootScope.ranking[ref.push().name()] = {name: $rootScope.name, score: $scope.score, time: $scope.time, model: $scope.model};
+            $rootScope.ranking[ref.push().name()] = {name: $scope.name, score: $scope.score, time: $scope.time, model: $scope.model};
             angular.element('#ranking').modal('hide');
         };
 
         $scope.initGame();
 
-    }])
-
-    .controller('surveyCtrl', ['$scope', '$rootScope', 'FBURL', 'Firebase', 'angularFireCollection', 'angularFire', function($scope, $rootScope, FBURL, Firebase, angularFireCollection, angularFire) {
-
+        // survey section controller
         // default placeholders
         $scope.rating = 5;
         $scope.difficulty = 'Medium';
@@ -60,8 +58,8 @@ angular.module('myApp.controllers', ['ngRoute'])
 
         // add new results to the list
         $scope.addSurvey = function() {
-            if( $rootScope.name && $scope.rating && $scope.difficulty && $scope.playagain && $scope.recommend && $scope.gameType ) {
-                $rootScope.results[surveyRef.push().name()] = {name: $rootScope.name, rating: $scope.rating, difficulty: $scope.difficulty, playagain: $scope.playagain, recommend: $scope.recommend, gameType: $scope.gameType, comment: $scope.comment};
+            if( $scope.name && $scope.rating && $scope.difficulty && $scope.playagain && $scope.recommend && $scope.gameType ) {
+                $rootScope.results[surveyRef.push().name()] = {name: $scope.name, rating: $scope.rating, difficulty: $scope.difficulty, playagain: $scope.playagain, recommend: $scope.recommend, gameType: $scope.gameType, comment: $scope.comment};
                 $scope.successInfo = true;
                 angular.element('#survey').modal('hide');
             } else {
