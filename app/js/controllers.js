@@ -4,35 +4,31 @@
 
 angular.module('myApp.controllers', ['ngRoute'])
 
-    .controller('gameCtrl', ['$scope', '$rootScope', 'Firebase', 'angularFire', '$location', function($scope, $rootScope, Firebase, angularFire, $location) {
+    .controller('mainCtrl', ['$scope', '$rootScope', 'Firebase', 'angularFire', function($scope, $rootScope, Firebase, angularFire) {
 
         $scope.initGame = function () {
-            window.addEventListener('load', Game.start);
-        }
+            Game.start();
+        };
 
         $scope.$watch('score', function () {
-            console.log($scope.score);
             if ($scope.score > 0) {
-                $('#ranking').modal('show');
+                angular.element('#ranking').modal('show');
             }
         });
 
         var ref = new Firebase('https://ux-research.firebaseio.com/ranking');
-        angularFire(ref.limit(15), $rootScope, "ranking");
-        $scope.name = 'Guest' + Math.floor(Math.random()*101);
+        angularFire(ref.limit(10), $rootScope, "ranking");
+        $rootScope.name = 'Guest' + Math.floor(Math.random()*101);
         $scope.addScore = function() {
-            $rootScope.ranking[ref.push().name()] = {name: $scope.name, score: $scope.score, time: $scope.time};
-            $('#ranking').modal('hide');
-            $location.path('/survey');
+            $rootScope.ranking[ref.push().name()] = {name: $rootScope.name, score: $scope.score, time: $scope.time, model: $scope.model};
+            angular.element('#ranking').modal('hide');
         };
 
         $scope.initGame();
+
     }])
 
     .controller('surveyCtrl', ['$scope', '$rootScope', 'FBURL', 'Firebase', 'angularFireCollection', 'angularFire', function($scope, $rootScope, FBURL, Firebase, angularFireCollection, angularFire) {
-
-        // default sorting
-        $scope.predicate = '-score';
 
         // default placeholders
         $scope.rating = 5;
@@ -52,21 +48,22 @@ angular.module('myApp.controllers', ['ngRoute'])
 
         // open modal
         $scope.takeSurvey = function () {
-            $('#survey').modal('show');
+            angular.element('#survey').modal('show');
         };
 
         // fetch score for ranking
         var ref = new Firebase('https://ux-research.firebaseio.com/ranking');
-        angularFire(ref.limit(15), $rootScope, "ranking");
+        angularFire(ref.limit(10), $rootScope, "ranking");
 
         var surveyRef = new Firebase('https://ux-research.firebaseio.com/survey');
         angularFire(surveyRef, $rootScope, "results");
 
         // add new results to the list
         $scope.addSurvey = function() {
-            if( $scope.rating && $scope.difficulty && $scope.playagain && $scope.recommend && $scope.gameType ) {
-                $rootScope.results[surveyRef.push().name()] = {rating: $scope.rating, difficulty: $scope.difficulty, playagain: $scope.playagain, recommend: $scope.recommend, gameType: $scope.gameType, comment: $scope.comment};
+            if( $rootScope.name && $scope.rating && $scope.difficulty && $scope.playagain && $scope.recommend && $scope.gameType ) {
+                $rootScope.results[surveyRef.push().name()] = {name: $rootScope.name, rating: $scope.rating, difficulty: $scope.difficulty, playagain: $scope.playagain, recommend: $scope.recommend, gameType: $scope.gameType, comment: $scope.comment};
                 $scope.successInfo = true;
+                angular.element('#survey').modal('hide');
             } else {
                 alert('You missed something.');
             }
@@ -84,7 +81,7 @@ angular.module('myApp.controllers', ['ngRoute'])
             $scope.err = err||null;
             typeof(callback) === 'function' && callback(err, user);
             if (!$scope.err) {
-                $location.path('/result')
+                $location.path('/result');
             }
             });
         };

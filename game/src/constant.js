@@ -1,10 +1,12 @@
 Constant = {
     //globle attributes
-    player_width: 87,
-    player_height: 80,
+    player_width: 100,
+    player_height: 60,
+    player_speed: 6,
     bullet_size: 5,
     explosion_size: 128,
-    enemy_width: 16,
+    enemy_width: 44,
+    enemy_height: 47,
 
     
 
@@ -25,5 +27,3 @@ Attribute = {
     player_position_x: 0,
     player_position_y: 0
 }
-
-console.log(Attribute);

@@ -28,3 +28,47 @@ Crafty.c("BulletExplosion", {
     }
 });
 
+Crafty.c('Grid', {
+    init: function () {
+        this.attr({
+            w: Constant.map_width,
+            h: Constant.map_height
+        })
+    }
+
+});
+
+Crafty.c("Flicker", {
+    flicker: true,
+    init: function () {
+        this.attr({
+            timer: 5
+        })
+        .requires('2D, Canvas, Grid, Color')
+        .color('rgb(125, 125, 125)')
+        .bind("EnterFrame", function (frame) {
+            if (frame.frame % 5 == 0 && this.flicker) {
+                if (this.alpha == 0.0) {
+                    this.alpha = 1.0;
+                } else {
+                    this.alpha = 0.0;
+                }
+            }
+            if (!this.flicker) {
+                this.alpha = 1.0;
+            }
+            this.timer--;
+            if (this.timer < 0) {
+                this.destroy();
+            }
+        });
+        this.flicker = true;
+
+    },
+
+    setTimer: function (t) {
+        this.timer = t;
+    }
+
+});
+

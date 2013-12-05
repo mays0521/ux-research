@@ -6,7 +6,7 @@
    angular.module('myApp.services', ['ngRoute'])
 
       // app version
-      .value('version', '0.3')
+      .value('version', '1.0')
 
       .factory('loginService', ['angularFireAuth', '$location', '$rootScope',
          function(angularFireAuth, $location, $rootScope) {

@@ -1,0 +1,163 @@
+<!-- game section -->
+<div id="section1">
+
+    <div id="cr-stage"></div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="ranking" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <form ng-submit="addScore()">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Congratulations!</h4>
+                </div>
+                <div class="modal-body">
+                    <h2>Your score is <strong>{{score || 0}}</strong>.</h2>
+                    <h2>Do you want to send this score?</h2>
+                    <button type="button" class="btn btn-default" ng-click="sendScore = true">Yes</button>
+                    <button type="button" class="btn btn-default" ng-click="sendScore = false" data-dismiss="modal" aria-hidden="true">No</button>
+                    <div ng-show="sendScore">
+                        <h2>What is your name?</h2>
+                        <input type="text" ng-model="name" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
+                    <button ng-show="sendScore" type="submit" class="btn btn-primary">Send Your Score</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+        </form>
+    </div><!-- /.modal -->
+
+</div>
+
+<hr>
+
+<!-- ranking and survey section -->
+<div id="section2" ng-controller="surveyCtrl">
+    <div class="col-md-6">
+        <h2>Real-time Ranking</h2>
+        <h4>Top 10 Players</h4>
+        <hr>
+        <h2 ng-show="!ranking">Loading...</h2>
+        <table class="table table-striped" ng-show="ranking">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Score</th>
+                <th>Time</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="rank in ranking | toArray | orderBy:'-score'">
+                <td>{{ rank.name }}</td>
+                <td>{{ rank.score }}</td>
+                <td>{{ rank.time }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-md-6">
+        <h2>Take the Survey</h2>
+        <h4>6 questions simple survey (< 1 minute)</h4>
+        <hr>
+        <div class="question">
+            <h4>Questions</h4>
+            <ul>
+                <li>1.	How would you rate your overall experience with this game?</li>
+                <li>2.	How difficult do you think the game is?</li>
+                <li>3.	Are you willing to play the game again?</li>
+                <li>4.	Are you willing to recommend this game to a friend or colleague?</li>
+                <li>5.	What kind of online games do you play most often?</li>
+                <li>6.	Other comments or suggestions? (Optional)</li>
+            </ul>
+            <hr>
+            <div class="pull-right">
+                <button type="button" class="btn btn-outline-inverse btn-lg" ng-click="takeSurvey()" ng-hide="successInfo"> Click Here to Take the Survey</button>
+                <!-- success information/alert -->
+                <div class="alert alert-success alert-dismissable" ng-show="successInfo">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <strong>Thank you for your feedback!</strong>.
+                </div>
+            </div>
+        </div><!-- ./question -->
+    </div>
+
+    <!-- survey detail modal -->
+    <div class="modal fade" id="survey" tabindex="-1" role="dialog" aria-labelledby="survey" aria-hidden="true">
+        <form ng-submit="addSurvey()">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Game Survey</h4>
+                </div>
+                <div class="modal-body">
+
+                    <!-- star rating question -->
+                    <div>
+                        <h3 ng-show="name">Hello, {{ name }}</h3>
+                        Your Name? <input type="text" ng-model="name" required>
+                    </div>
+                    <div>
+                        <h3>
+                            1.	How would you rate your overall experience with this game?<br />
+                            <small>(0 is Poor, 10 is Excellent)</small>
+                        </h3>
+                        <div star-rating rating-value="rating" max="10" on-rating-selected="updateRating(rating)" readonly="false"></div>
+                    </div>
+                    <!-- toggle choice question -->
+                    <div>
+                        <h3>2.	How difficult do you think the game is?</h3>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-primary" ng-model="difficulty" btn-radio="'Easy'">Easy</button>
+                            <button type="button" class="btn btn-primary" ng-model="difficulty" btn-radio="'Medium'">Medium</button>
+                            <button type="button" class="btn btn-primary" ng-model="difficulty" btn-radio="'Hard'">Hard</button>
+                        </div>
+                    </div>
+                    <!-- toggle choice question -->
+                    <div>
+                        <h3>3.	Are you willing to play the game again?</h3>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-primary" ng-model="playagain" btn-radio="'Yes'">YES</button>
+                            <button type="button" class="btn btn-primary" ng-model="playagain" btn-radio="'No'">NO</button>
+                        </div>
+                    </div>
+                    <!-- toggle choice question -->
+                    <div>
+                        <h3>4.	Are you willing to recommend this game to a friend or colleague?</h3>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-primary" ng-model="recommend" btn-radio="'Yes'">YES</button>
+                            <button type="button" class="btn btn-primary" ng-model="recommend" btn-radio="'No'">NO</button>
+                        </div>
+                    </div>
+                    <!-- radio choice question -->
+                    <div>
+                        <h3>5.	What kind of online games do you play most often?</h3>
+                        <div class="radio">
+                            <input type="radio" ng-model="gameType" value="Puzzle">Puzzle, board game, game show, trivia and card games.<br/>
+                            <input type="radio" ng-model="gameType" value="Action">Action, sports, strategy and role playing games.<br/>
+                            <input type="radio" ng-model="gameType" value="Causal">Casual and social games.<br/>
+                            <input type="radio" ng-model="gameType" value="MultiPlayer">Persistent multi-player universe games.<br/>
+                            <input type="radio" ng-model="gameType" value="Other">Other games.
+                        </div>
+                    </div>
+                    <!-- open question -->
+                    <div>
+                        <h3>6.	Other comments or suggestions?</h3>
+                        <textarea class="form-control" rows="2" ng-model="comment" placeholder="We welcome your comments and feedback."></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">Close</button>
+                    <button type="submit" class="btn btn-primary">Send results</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+        </form>
+    </div><!-- /.modal -->
+
+</div>

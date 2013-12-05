@@ -4,6 +4,7 @@
 <table class="table table-hover">
     <thead>
     <tr>
+        <th>Name</th>
         <th>Rating</th>
         <th>Difficulty</th>
         <th>Play Again?</th>
@@ -14,6 +15,7 @@
     </thead>
     <tbody>
     <tr ng-repeat="result in results">
+        <td>{{result.name}}</td>
         <td>{{result.rating}}</td>
         <td>{{result.difficulty}}</td>
         <td>{{result.playagain}}</td>

@@ -6,7 +6,7 @@ Game = {
         tile: {
             width: 16,
             height: 16
-        },
+        }
     },
 
 
@@ -28,7 +28,7 @@ Game = {
         Crafty.init(Game.width(), Game.height());
 
         Crafty.scene('StartPage');
-	    Crafty.audio.play("intro",-1);
+	   
              
     }
 }

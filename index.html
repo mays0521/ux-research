@@ -2,14 +2,20 @@
 <html lang="en" ng-app="myApp">
 <head>
     <meta charset="utf-8">
-    <title>Game UX Research</title>
+    <title>WPI User Experience Research Project</title>
     <link rel="stylesheet" href="app/css/main.css"/>
     <link rel="stylesheet" href="http://cdn.jsdelivr.net/bootstrap/3.0.0/css/bootstrap.min.css"/>
+
+    <!-- Google Font Links -->
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Lato%3A300%2C400%2C700&amp;ver=3.6.1">
+    <link href='http://fonts.googleapis.com/css?family=Oswald:400,700' rel='stylesheet' type='text/css'>
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:300,600,700" rel="stylesheet" type="text/css">
+
 </head>
 <body>
 
 <!-- Navigation -->
-<nav class="navbar navbar-default" role="navigation">
+<nav class="navbar navbar-default nav-custom navbar-fixed-top" role="navigation">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
@@ -18,15 +24,12 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Game UX Research</a>
+            <a class="navbar-brand brand-custom" href="#">WPI User Experience Research Project</a>
         </div>
 
         <div class="collapse navbar-collapse navbar-ex1-collapse">
-            <ul class="nav navbar-nav">
-                <li><a href="#/game1">Game Mode #1</a></li>
-                <li><a href="#/game2">Game Mode #2</a></li>
-                <li><a href="#/survey">Ranking & Survey</a></li>
-                <li><a href="#/result">Survey Result</a></li>
+            <ul class="nav navbar-nav pull-right">
+                <li><a href>About</a></li>
                 <!-- <li ng-show="auth"><a href="#/result">Survey Result</a></li>-->
             </ul>
             <ul class="nav navbar-nav navbar-right">
@@ -37,16 +40,21 @@
     </div><!-- /.container -->
 </nav>
 
-<div class="container">
-    <!-- Main content -->
-    <div ng-view></div>
-</div>
-
-<div class="navbar navbar-default navbar-fixed-bottom">
+<div id="slide">
     <div class="container">
-        <p class="text-muted credit">This is a <a href="https://github.com/cdeng/ux-research" title="Github project" target="_blank">Github</a> Project.  {{ 'Current version is v%VERSION%.' | interpolate }}</p>
+        <!-- Main content -->
+        <div ng-view></div>
     </div>
 </div>
+
+<!-- footer section -->
+<footer id="footer">
+    <div class="container clearfix">
+        <!-- copyright -->
+        <span class="copyright pull-left">© 2013 WPI User Experience Research Project {{ 'v%VERSION%' | interpolate }}</span>
+        <span class="copyright pull-right"><a href="https://github.com/cdeng/ux-research" title="Github repository" target="_blank">Github</a> Project - Code licensed under <a href="http://opensource.org/licenses/mit-license.html" title="MIT License" target="_blank">MIT License</a></span>
+    </div>
+</footer>
 
 <script src="http://static.firebase.com/v0/firebase.js"></script>
 <script src="http://cdn.jsdelivr.net/jquery/2.0.3/jquery-2.0.3.min.js"></script>
@@ -65,10 +73,8 @@
 
 <!-- game js engine files -->
 <script src="game/lib/crafty.js"></script>
-<script src="game/src/load.js"></script>
 <script src="game/src/game.js"></script>
 <script src="game/src/components.js"></script>
-<script src="game/src/main.js"></script>
 <script src="game/src/effects.js"></script>
 <script src="game/src/player.js"></script>
 <script src="game/src/enemy.js"></script>
@@ -77,5 +83,6 @@
 <script src="game/src/constant.js"></script>
 <script src="game/src/css.js"></script>
 <script src="game/src/level.js"></script>
+
 </body>
 </html>
